@@ -1,0 +1,48 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block metadescription %}
+
+        {{product.description}}
+
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{product.name}} - FreshCart
+    {% else %}
+         FreshCart
+    {% endif %}
+{% endblock %}
+
+
+ {% block content %}
+
+
+
+<div>
+    <div>
+             <a class="color_a btn" href="{% url 'freshcart:allProdCat' %}">Home</a>|
+            <a href="{{product.category.get_url}}" class="btn">{{product.category}}</a>|
+            {{product.name}}
+
+    </div>
+</div>
+
+
+<div class="container=fluid">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3 text-center Prod_img_div">
+            <div class="card"><img  src="{{product.image.url}}" width="400px;" height="300px;"></div>
+        </div>
+         <div class="col-12 col-sm-12 col-md-12 col-lg-8 ">
+            <br><h3 class="my_prod_name" style=" text-transform:uppercase;">{{product.name}}</h3>
+             <p style="color:blue;">{{product.price}}/500g</p>
+             <p>{{product.description}}</p><br>
+             {% if product.stock <= 0 %}
+             <h3>Out of Stock</h3>
+             {% else %}
+             <a href="{% url 'cart:add_cart' product.id %}" class="btn btn-dark">Add to Cart</a>
+             {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

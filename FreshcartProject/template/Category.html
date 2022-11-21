@@ -1,0 +1,77 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{category.description}}
+    {% else %}
+        Welcome to fresh cart shope where you can buy fresh items...
+    {% endif %}
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{category.name}} - FreshCart
+    {% else %}
+        See Our New Collections - FreshCart
+    {% endif %}
+{% endblock %}
+
+
+ {% block content %}
+
+<div>
+    <div >
+        {% if category %}
+        <img src="{{category.image.url}}" class="my_cat_img">
+         <div class="my_para">
+       <h1 class="my_header"><b>{{category.name}}</b></h1><br>
+        <p class="text-justify text-center" style="font-size:16px;">
+            {{category.description}}
+        </p>
+    </div>
+        {% else %}
+        <img src="{% static 'img/banner.png' %}" class="my_cat_img">
+         <div class="my_para">
+        <h1 class="my_header"> fresh cart </h1><br>
+        <p class="text-justify">
+            The best online <strong>FreshCart</strong> store is here to provide you an exceptional shopping experience. We have the best collections of high-quality and Fresh Fish, Mutton and Chicken online in Delhi. Large varieties of collections of Fresh Water Fish for customers to choose from- Parse Maach, Bele Maach, Shingi Maach, White Prawn, Hybrid Tiger Prawn, Live Mud Crab and much more. With an easy web portal, Freshfishbasket aims to provide you a simple step-wise shopping experience with fast and prompt delivery. Our payment gateways are safe and secure with multiple payments options. We also have option cash on delivery to ease out shopping experience.
+
+            We always show the products that are in stocks and you can order on the website. At Freshfishbasket.com, you get what you see! If at all sudden guest appears in your house and you want them to feed with the best meal or for any special occasion, be sure we come to your secure
+
+        </p>
+    </div>
+        {% endif %}
+    </div>
+    <br>
+
+
+</div>
+<div class="container-fluid my_prod_list">
+   <div class="row">
+        {% for product in products.object_list %}
+    <div class="col-3 col-sm-6 col-md-4 col-lg-3 my_product_card ">
+        <div class="card " style="width: 18rem;">
+            <a href="{{product.get_url}}"> <img class="card-img-top" src="{{product.image.url}}" alt="{{product.name}}"></a>
+            <div class="card-body cat_edit">
+                <b>
+                    {{product.name}}<br>
+                <p style=" color:blue;">{{product.price}}/500g</p>
+                </b>
+            </div>
+        </div>
+
+    </div>
+       {% endfor %}
+   </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" cla="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}}" class="btn btn-sm">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+    {% endblock %}
